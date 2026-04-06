@@ -1,10 +1,7 @@
 import { renderHook, act } from '@testing-library/react-native';
 import { useWeldAnalysis } from '../../src/hooks/useWeldAnalysis';
 
-jest.mock('expo-file-system', () => ({
-  readAsStringAsync: jest.fn().mockResolvedValue('base64mock'),
-  EncodingType: { Base64: 'base64' },
-}));
+// expo-file-system mock is handled via moduleNameMapper in jest.config.js
 
 jest.mock('../../src/lib/imageUtils', () => ({
   cropAndPadFrame: jest.fn().mockResolvedValue('file:///cropped.jpg'),

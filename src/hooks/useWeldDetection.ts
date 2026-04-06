@@ -24,11 +24,12 @@ export function useWeldDetection() {
     runAtTargetFps(15, () => {
       'worklet';
       const start = performance.now();
-      const outputs = model.model!.runSync([frame]);
+      // Frame is implicitly converted to tensor input via JSI in the worklet
+      const outputs = model.model!.runSync([frame as unknown as Float32Array]);
       const inferenceTimeMs = performance.now() - start;
 
       if (outputs[0]) {
-        const rawData = outputs[0].data as unknown as Float32Array;
+        const rawData = outputs[0] as Float32Array;
         const copy = new Float32Array(rawData);
         runOnJS(updateDetection)(
           runYoloPostProcess(copy, inferenceTimeMs).primary,

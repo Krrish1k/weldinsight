@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import * as FileSystem from 'expo-file-system';
+import { readAsStringAsync } from 'expo-file-system/build/legacy/FileSystem';
 import { cropAndPadFrame } from '../lib/imageUtils';
 import { analyzeWeld } from '../lib/gemini/analyzeWeld';
 import { AnalysisState, BoundingBox, FrameDimensions } from '../types';
@@ -26,8 +26,8 @@ export function useWeldAnalysis() {
       const croppedUri = await cropAndPadFrame(frameUri, box, dims);
 
       setAnalysisState((s) => ({ ...s, status: 'analyzing', croppedImageUri: croppedUri }));
-      const base64 = await FileSystem.readAsStringAsync(croppedUri, {
-        encoding: FileSystem.EncodingType.Base64,
+      const base64 = await readAsStringAsync(croppedUri, {
+        encoding: 'base64',
       });
       const result = await analyzeWeld(base64);
 

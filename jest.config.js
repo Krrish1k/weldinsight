@@ -24,6 +24,7 @@ module.exports = {
         '@env': '<rootDir>/__mocks__/@env.ts',
         'react-native-worklets/package.json': '<rootDir>/__mocks__/react-native-worklets/package.json',
         'react-native-worklets': '<rootDir>/__mocks__/react-native-worklets.ts',
+        'expo-file-system/build/legacy/FileSystem': '<rootDir>/__mocks__/expo-file-system.ts',
       },
       transformIgnorePatterns: [
         'node_modules/(?!(jest-)?react-native|@react-native|expo|@expo|nativewind|react-native-reanimated)',
