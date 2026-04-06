@@ -1,1 +1,2 @@
+process.env.RNTL_SKIP_DEPS_CHECK = '1';
 require('react-native-reanimated').setUpTests();

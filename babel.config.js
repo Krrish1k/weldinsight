@@ -1,9 +1,15 @@
 module.exports = function (api) {
   api.cache(true);
+  const isTest = process.env.NODE_ENV === 'test';
   return {
-    presets: ['babel-preset-expo'],
+    presets: [
+      [
+        'expo/internal/babel-preset',
+        isTest ? { reanimated: false, worklets: false } : {},
+      ],
+    ],
     plugins: [
-      'nativewind/babel',
+      ...(isTest ? [] : ['nativewind/babel']),
       [
         'module:react-native-dotenv',
         {
@@ -13,7 +19,7 @@ module.exports = function (api) {
           allowUndefined: false,
         },
       ],
-      'react-native-reanimated/plugin',
+      ...(isTest ? [] : ['react-native-reanimated/plugin']),
     ],
   };
 };

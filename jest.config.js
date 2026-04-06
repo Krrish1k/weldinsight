@@ -22,6 +22,8 @@ module.exports = {
         'react-native-fast-tflite': '<rootDir>/__mocks__/react-native-fast-tflite.ts',
         'expo-image-manipulator': '<rootDir>/__mocks__/expo-image-manipulator.ts',
         '@env': '<rootDir>/__mocks__/@env.ts',
+        'react-native-worklets/package.json': '<rootDir>/__mocks__/react-native-worklets/package.json',
+        'react-native-worklets': '<rootDir>/__mocks__/react-native-worklets.ts',
       },
       transformIgnorePatterns: [
         'node_modules/(?!(jest-)?react-native|@react-native|expo|@expo|nativewind|react-native-reanimated)',
