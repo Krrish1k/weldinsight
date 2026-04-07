@@ -27,6 +27,13 @@ export default function DashboardScreen() {
           <Text className="text-white font-semibold text-lg">Start Inspection</Text>
         </Pressable>
 
+        <Pressable
+          onPress={() => router.push('/upload')}
+          className="bg-zinc-800 active:bg-zinc-700 rounded-2xl py-5 items-center"
+        >
+          <Text className="text-white font-semibold text-lg">Upload Photo</Text>
+        </Pressable>
+
         <View className="bg-zinc-900 rounded-2xl p-5 gap-y-3">
           <Text className="text-white font-semibold text-base">How it works</Text>
           <Text className="text-zinc-400 text-sm leading-relaxed">

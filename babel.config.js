@@ -7,9 +7,9 @@ module.exports = function (api) {
         'expo/internal/babel-preset',
         isTest ? { reanimated: false, worklets: false } : {},
       ],
+      ...(isTest ? [] : ['nativewind/babel']),
     ],
     plugins: [
-      ...(isTest ? [] : ['nativewind/babel']),
       [
         'module:react-native-dotenv',
         {

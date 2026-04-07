@@ -2,12 +2,12 @@
 import { RawDetection } from '../../types';
 import { CONFIDENCE_THRESHOLD, NUM_ANCHORS } from '../../constants/model';
 
-export function parseYoloOutput(output: Float32Array): RawDetection[] {
+export function parseYoloOutput(output: Float32Array, confidenceThreshold = CONFIDENCE_THRESHOLD): RawDetection[] {
   const detections: RawDetection[] = [];
 
   for (let i = 0; i < NUM_ANCHORS; i++) {
     const confidence = output[4 * NUM_ANCHORS + i];
-    if (confidence < CONFIDENCE_THRESHOLD) continue;
+    if (confidence < confidenceThreshold) continue;
 
     detections.push({
       cx: output[0 * NUM_ANCHORS + i],

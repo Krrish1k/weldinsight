@@ -13,14 +13,21 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     supportsTablet: true,
     infoPlist: {
       NSCameraUsageDescription: 'WeldInsight Pro uses the camera to inspect weld beads.',
+      NSPhotoLibraryUsageDescription: 'WeldInsight Pro needs photo library access to analyze weld images.',
     },
   },
   android: {
     package: 'com.anupeng.weldinsightpro',
-    permissions: ['android.permission.CAMERA'],
+    permissions: ['android.permission.CAMERA', 'android.permission.READ_MEDIA_IMAGES'],
   },
   plugins: [
     'expo-router',
+    [
+      'expo-image-picker',
+      {
+        photosPermission: 'WeldInsight Pro needs photo library access to analyze weld images.',
+      },
+    ],
     [
       'react-native-vision-camera',
       {
@@ -28,7 +35,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         enableMicrophonePermission: false,
       },
     ],
-    'expo-image-manipulator',
-    ['expo-asset', { assets: ['./assets/models/yolov8n_weld.tflite'] }],
+['expo-asset', { assets: ['./assets/models/yolov8n_weld.tflite'] }],
   ],
 });

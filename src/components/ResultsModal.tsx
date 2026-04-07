@@ -1,7 +1,6 @@
 import { Modal, View, Text, ScrollView, Pressable, Image } from 'react-native';
 import { WeldAnalysis } from '../types';
 import StatusBadge from './StatusBadge';
-import AnalysisCard from './AnalysisCard';
 
 interface ResultsModalProps {
   visible: boolean;
@@ -37,29 +36,11 @@ export default function ResultsModal({
           )}
 
           {analysis && (
-            <View className="gap-y-3">
-              <AnalysisCard label="Surface Condition" value={analysis.surface_condition} />
-              <AnalysisCard label="Bead Geometry" value={analysis.bead_geometry} />
-              <AnalysisCard label="Fusion Quality" value={analysis.fusion_quality} />
-              <AnalysisCard label="Discontinuities" value={analysis.discontinuities} />
-
-              <View className="bg-zinc-900 rounded-xl p-4 gap-y-2">
-                <Text className="text-zinc-300 text-sm font-semibold uppercase tracking-wider">
-                  Recommended Actions
-                </Text>
-                {analysis.recommended_actions.map((action, idx) => (
-                  <Text key={idx} className="text-zinc-400 text-sm leading-relaxed">
-                    {idx + 1}. {action}
-                  </Text>
-                ))}
-              </View>
-
-              <View className="flex-row items-center justify-between bg-zinc-900 rounded-xl px-4 py-3">
-                <Text className="text-zinc-400 text-sm">AI Confidence</Text>
-                <Text className="text-white font-semibold">
-                  {Math.round(analysis.confidence_score * 100)}%
-                </Text>
-              </View>
+            <View className="bg-zinc-900 rounded-xl p-4">
+              <Text className="text-zinc-300 text-sm font-semibold uppercase tracking-wider mb-2">
+                Technical Assessment
+              </Text>
+              <Text className="text-zinc-400 text-sm leading-relaxed">{analysis.reason}</Text>
             </View>
           )}
         </ScrollView>

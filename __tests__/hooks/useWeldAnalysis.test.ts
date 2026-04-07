@@ -9,13 +9,8 @@ jest.mock('../../src/lib/imageUtils', () => ({
 
 jest.mock('../../src/lib/gemini/analyzeWeld', () => ({
   analyzeWeld: jest.fn().mockResolvedValue({
-    surface_condition: 'Acceptable',
-    bead_geometry: 'Acceptable',
-    fusion_quality: 'Acceptable',
-    discontinuities: 'None detected',
     verdict: 'PASS',
-    recommended_actions: ['Continue.'],
-    confidence_score: 0.9,
+    reason: 'No defects detected.',
   }),
 }));
 

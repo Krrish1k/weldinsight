@@ -17,7 +17,16 @@ export async function analyzeWeld(base64Image: string): Promise<WeldAnalysis> {
   try {
     parsed = JSON.parse(responseText);
   } catch {
-    throw new Error(`Gemini returned non-JSON response: ${responseText.slice(0, 200)}`);
+    // Try extracting a JSON object if the model wrapped it in prose
+    const match = responseText.match(/\{[\s\S]*\}/);
+    if (!match) {
+      throw new Error(`Gemini returned non-JSON response: ${responseText.slice(0, 200)}`);
+    }
+    try {
+      parsed = JSON.parse(match[0]);
+    } catch {
+      throw new Error(`Gemini returned non-JSON response: ${responseText.slice(0, 200)}`);
+    }
   }
 
   return validateWeldAnalysis(parsed);
@@ -29,21 +38,13 @@ function validateWeldAnalysis(raw: unknown): WeldAnalysis {
   }
 
   const obj = raw as Record<string, unknown>;
-  const required = [
-    'surface_condition', 'bead_geometry', 'fusion_quality',
-    'discontinuities', 'verdict', 'recommended_actions', 'confidence_score',
-  ];
 
-  for (const key of required) {
+  for (const key of ['verdict', 'reason']) {
     if (!(key in obj)) throw new Error(`Missing field in analysis response: ${key}`);
   }
 
   if (obj.verdict !== 'PASS' && obj.verdict !== 'FAIL') {
     throw new Error(`Invalid verdict: ${obj.verdict}`);
-  }
-
-  if (!Array.isArray(obj.recommended_actions)) {
-    throw new Error('recommended_actions must be an array');
   }
 
   return obj as unknown as WeldAnalysis;

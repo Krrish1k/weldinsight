@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { readAsStringAsync } from 'expo-file-system/build/legacy/FileSystem';
+import { readAsStringAsync } from 'expo-file-system/legacy';
 import { cropAndPadFrame } from '../lib/imageUtils';
 import { analyzeWeld } from '../lib/gemini/analyzeWeld';
 import { AnalysisState, BoundingBox, FrameDimensions } from '../types';
@@ -38,6 +38,7 @@ export function useWeldAnalysis() {
         croppedImageUri: croppedUri,
       });
     } catch (err) {
+      console.error('[analyzeWeld] failed:', err);
       setAnalysisState((s) => ({
         ...s,
         status: 'error',
@@ -48,5 +49,7 @@ export function useWeldAnalysis() {
 
   const reset = useCallback(() => setAnalysisState(INITIAL_STATE), []);
 
-  return { analysisState, startAnalysis, reset };
+  const isAnalyzing = ['capturing', 'cropping', 'analyzing'].includes(analysisState.status);
+
+  return { analysisState, startAnalysis, reset, isAnalyzing };
 }

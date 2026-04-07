@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useRef } from 'react';
 import { Camera } from 'react-native-vision-camera';
 import { router } from 'expo-router';
@@ -19,9 +19,7 @@ export default function CameraScreen() {
   const cameraRef = useRef<Camera>(null);
   const { device, hasPermission, requestPermission } = useCamera();
   const { frameProcessor, detectionSharedValue, isModelReady } = useWeldDetection();
-  const { analysisState, startAnalysis, reset } = useWeldAnalysis();
-
-  const isAnalyzing = ['capturing', 'cropping', 'analyzing'].includes(analysisState.status);
+  const { analysisState, startAnalysis, reset, isAnalyzing } = useWeldAnalysis();
 
   const handleCapture = async () => {
     const currentBox = detectionSharedValue.value;
@@ -79,10 +77,21 @@ export default function CameraScreen() {
         {!isModelReady && (
           <Text className="text-yellow-400 text-xs">Loading model...</Text>
         )}
-        <CaptureButton
-          onPress={handleCapture}
-          disabled={!isModelReady || isAnalyzing || !detectionSharedValue.value}
-        />
+        <View className="flex-row items-center gap-x-8">
+          <View className="w-14" />
+          <CaptureButton
+            onPress={handleCapture}
+            disabled={!isModelReady || isAnalyzing || !detectionSharedValue.value}
+          />
+          <Pressable
+            onPress={() => router.push('/upload')}
+            className="w-14 h-14 rounded-2xl bg-zinc-800 active:bg-zinc-700 items-center justify-center"
+          >
+            <View className="w-7 h-6 rounded border-2 border-white items-center justify-center">
+              <View className="w-2 h-2 rounded-full bg-white" />
+            </View>
+          </Pressable>
+        </View>
       </View>
 
       <ThinkingOverlay visible={isAnalyzing} />

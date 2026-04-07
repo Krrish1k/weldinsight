@@ -9,13 +9,8 @@ jest.mock('../../../src/lib/gemini/client', () => ({
 }));
 
 const VALID_RESPONSE = {
-  surface_condition: 'Acceptable: Clean surface with minimal spatter.',
-  bead_geometry: 'Acceptable: Uniform width and crown.',
-  fusion_quality: 'Acceptable: Good tie-in at toes.',
-  discontinuities: 'None detected',
   verdict: 'PASS',
-  recommended_actions: ['Continue current welding parameters.'],
-  confidence_score: 0.92,
+  reason: 'No significant defects detected; bead geometry and fusion are acceptable.',
 };
 
 describe('analyzeWeld', () => {
@@ -26,8 +21,7 @@ describe('analyzeWeld', () => {
 
     const result = await analyzeWeld('base64data');
     expect(result.verdict).toBe('PASS');
-    expect(result.confidence_score).toBeCloseTo(0.92);
-    expect(result.recommended_actions).toHaveLength(1);
+    expect(result.reason).toBe(VALID_RESPONSE.reason);
   });
 
   it('throws on non-JSON response', async () => {

@@ -24,8 +24,8 @@ export function useWeldDetection() {
     runAtTargetFps(15, () => {
       'worklet';
       const start = performance.now();
-      // Frame is implicitly converted to tensor input via JSI in the worklet
-      const outputs = model.model!.runSync([frame as unknown as Float32Array]);
+      const pixelBuffer = frame.toArrayBuffer();
+      const outputs = model.model!.runSync([pixelBuffer]);
       const inferenceTimeMs = performance.now() - start;
 
       if (outputs[0]) {

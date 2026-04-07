@@ -32,13 +32,8 @@ export interface FrameDimensions {
 export type WeldVerdict = 'PASS' | 'FAIL';
 
 export interface WeldAnalysis {
-  surface_condition: string;
-  bead_geometry: string;
-  fusion_quality: string;
-  discontinuities: string;
   verdict: WeldVerdict;
-  recommended_actions: string[];
-  confidence_score: number;
+  reason: string;
 }
 
 export type AnalysisStatus =
