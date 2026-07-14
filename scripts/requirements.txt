@@ -1,0 +1,4 @@
+# Dependencies for scripts/detect_weld.py (standalone ONNX inference)
+numpy>=1.24
+onnxruntime>=1.17
+opencv-python>=4.9
