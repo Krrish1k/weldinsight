@@ -4,6 +4,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'WeldInsight Pro',
   slug: 'weldinsight-pro',
+  owner: 'notencryption', // Added this to match your account
   version: '1.0.0',
   orientation: 'portrait',
   userInterfaceStyle: 'dark',
@@ -35,6 +36,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         enableMicrophonePermission: false,
       },
     ],
-['expo-asset', { assets: ['./assets/models/yolov8n_weld.tflite'] }],
+    [
+      'expo-asset',
+      {
+        assets: ['./assets/models/yolov8n_weld.tflite']
+      }
+    ],
   ],
+  extra: {
+    geminiApiKey: process.env.GEMINI_API_KEY,
+    eas: {
+      projectId: "6a06da60-5c61-4c02-bbed-870e020fc114"
+    }
+  }
 });

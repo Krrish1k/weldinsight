@@ -1,13 +1,15 @@
 import { GoogleGenerativeAI, GenerativeModel, SchemaType } from '@google/generative-ai';
-import { GEMINI_API_KEY } from '@env';
+import Constants from 'expo-constants';
 
 let _model: GenerativeModel | null = null;
 
 export function getGeminiModel(): GenerativeModel {
   if (_model) return _model;
 
+  const GEMINI_API_KEY = Constants.expoConfig?.extra?.geminiApiKey as string | undefined;
+
   if (!GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY is not defined. Check your .env file.');
+    throw new Error('GEMINI_API_KEY is not defined. Check your EAS environment variables.');
   }
 
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
